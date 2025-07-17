@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(digital_root(493193));
+        System.out.println(toCamelCase("the-stealth-warrior"));
     }
     /*
     SquareDigits
@@ -106,5 +106,28 @@ public class Main {
         }
         return digital_root(sum);
     }
+    /*
+    Complete the method/function so that it converts dash/underscore delimited words into camel casing.
+    The first word within the output should be capitalized only if the original word was capitalized (known as Upper Camel Case, also often referred to as Pascal case).
+    The next words should be always capitalized.
+    Examples
+    "the-stealth-warrior" gets converted to "theStealthWarrior"
+    "The_Stealth_Warrior" gets converted to "TheStealthWarrior"
+    "The_Stealth-Warrior" gets converted to "TheStealthWarrior"
+    */
+    private static String toCamelCase(String s){
+        if(s.isEmpty())return "";
+        String [] newS = s.split("[-_]");
+        String result = "";
+        if(s.substring(0,2).matches("[-_][A-Z]")||s.substring(0,1).matches("[a-z]|[A-Z]"))result+=newS[0];
+        else if(s.substring(0,2).matches("[-_][a-z]"))result+=newS[0].substring(0,1) + newS[0].substring(1,newS[0].length()-1);
+
+        for (int i = 1; i < newS.length ; i++) {
+            result+=newS[i].substring(0,1).toUpperCase() + newS[i].substring(1,newS[i].length());
+        }
+        return result;
+    }
+
+
 }
 
