@@ -1,11 +1,10 @@
 package codewars;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(toCamelCase("the-stealth-warrior"));
+       System.out.println(removeBang("!!!Hi !!hi!!! !hi"));
     }
     /*
     SquareDigits
@@ -127,7 +126,56 @@ public class Main {
         }
         return result;
     }
+    /*Given two arrays a and b write a function comp(a, b) (orcompSame(a, b)) that checks whether the two arrays have the "same" elements,
+    with the same multiplicities (the multiplicity of a member is the number of times it appears).
+    "Same" means, here, that the elements in b are the elements in a squared, regardless of the order.
+    Examples
+    Valid arrays
+    a = [121, 144, 19, 161, 19, 144, 19, 11]
+    b = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
+    Invalid arrays
+    If, for example, we change the first number to something else, comp is not returning true anymore:
+    a = [121, 144, 19, 161, 19, 144, 19, 11]
+    b = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
+    comp(a,b) returns false because in b 132 is not the square of any number of a.
+*/
+    private static boolean comp(int[] a, int[] b){
+        if (a == null || b == null || a.length != b.length) return false;
 
+        Map<Integer, Integer> freqA = new HashMap<>();
+        Map<Integer, Integer> freqB = new HashMap<>();
 
+        for (int num : a) {
+            int square = num * num;
+            freqA.put(square, freqA.getOrDefault(square, 0) + 1);
+        }
+
+        for (int num : b) {
+            freqB.put(num, freqB.getOrDefault(num, 0) + 1);
+        }
+
+        return freqA.equals(freqB);
+    }
+
+    /*
+    Remove all exclamation marks from the end of words. Words are separated by a single space. There are no exclamation marks within a word.
+    Examples
+    "Hi!" --> "Hi"
+    "Hi!!!" --> "Hi"
+    "!Hi" --> "!Hi"
+    "!Hi!" --> "!Hi"
+    "Hi! Hi!" --> "Hi Hi"
+    "!!!Hi !!hi!!! !hi" --> "!!!Hi !!hi !hi"*/
+    private static String removeBang(String str){
+        if(str.isEmpty())return "";
+        String [] strA = str.split(" ");
+        if (strA.length==1)return strA[0].replaceAll("[A-Za-z]{0}!+","");
+        String result = "";
+        for(String var : strA){
+            result+=var.replaceAll("!+$","") + " ";
+        }
+        result = result.substring(0,result.length()-1);
+        return result;
+    }
 }
 
