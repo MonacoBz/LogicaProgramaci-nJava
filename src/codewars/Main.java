@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-       System.out.println(removeBang("!!!Hi !!hi!!! !hi"));
+       System.out.println(Arrays.toString(deadFish("iiisdosodddddiso")));
     }
     /*
     SquareDigits
@@ -176,6 +176,34 @@ public class Main {
         }
         result = result.substring(0,result.length()-1);
         return result;
+    }
+
+    /*
+    Create a parser to interpret and execute the Deadfish language.
+    Deadfish operates on a single value in memory, which is initially set to 0.
+    It uses four single-character commands:
+    i: Increment the value
+    d: Decrement the value
+    s: Square the value
+    o: Output the value to a result array
+    All other instructions are no-ops and have no effect.
+
+    Examples
+    Program "iiisdoso" should return numbers [8, 64].
+    Program "iiisdosodddddiso" should return numbers [8, 64, 3600].*/
+    private static int[] deadFish(String data){
+        if(data.isEmpty())return new int[]{};
+        List<Integer> dataA = new ArrayList<>();
+        int fish = 0;
+        for(char c : data.toCharArray()){
+            switch (c){
+               case 'i' -> fish++;
+               case 'd' -> fish--;
+               case 's' -> fish=fish * fish;
+               case 'o' -> dataA.add(fish);
+            };
+        }
+        return dataA.stream().mapToInt(Integer::intValue).toArray();
     }
 }
 
